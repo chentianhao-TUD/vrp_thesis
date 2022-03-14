@@ -23,12 +23,9 @@ for i in Nodes:
 for j in Nodes:
     service_time[j] = model.NewIntVar(0, 10000, 'service time at node {}'.format(j))
     start_service[j] = model.NewIntVar(0, 10000, 'start service time at node {}'.format(j))
+    model.Add(service_time[j] == demand[j])  # link modes with robots later
 model.Add(start_service[0] == 0)
 
-for i in Nodes:
-    for j in Nodes:
-        if j != 0:
-            model.Add(start_service[j] == start_service[i] + distance_var[0, i, j]).OnlyEnforceIf(x_var[0, i, j])
 
 
 
@@ -50,29 +47,39 @@ for i in Nodes:
 
 print('service time is', type(service_time))
 
-# max_of_service_time = np.amax(service_time)
-# index_of_max = np.where(service_time == max_of_service_time)
-# makespan = max_of_service_time + distance[(index_of_max, 0)]
+# calculation of start service at a node
+for i in Nodes:
+    for j in Nodes[1:]:
+        model.Add(start_service[j] >= start_service[i] + distance_var[0, i, j] + service_time[i]).OnlyEnforceIf(x_var[0, i, j])
+
+max_start_service = model.NewIntVar(0, 10000, 'max service time')
+model.AddMaxEquality(max_start_service, start_service)
+
+# makespan = max_start_service + distance_var[0, index_of_last_node, 0]
 
 
-# model.Minimize(sum(sum_distance))
-model.Minimize(makespan)
+model.Minimize(max_start_service)
 solver = cp_model.CpSolver()
 status = solver.Solve(model)
 # turn on the log if needed
 # solver.parameters.log_search_progress = True
 solver.parameters.enumerate_all_solutions = True
 solver.Solve(model)
-distance_solution = []
+
 if status == cp_model.OPTIMAL:
     print('found optimal solution\n')
     for i in Nodes:
         for j in Nodes:
-            if solver.Value(x_var[0, i, j]):
+            if solver.Value(x_var[0, i, j]) and solver.Value(start_service[j]):
                 print('vehicle is travelling from {} to {}'.format(i, j))
-                distance_solution.append(distance[(i, j)])
+                print('start time of service at {} is'.format(j), solver.Value(start_service[j]))
+                print('service time at node {} is'.format(j), solver.Value(service_time[j]))
+
 else:
     print('failed')
 
-print('total distance in solution\n', sum(distance_solution))
+
+print('max_start_service is', solver.Value(max_start_service))
+# print(np.where(start_service == solver.Value(max_start_service)))
+
 
