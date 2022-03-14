@@ -28,7 +28,7 @@ model.Add(start_service[0] == 0)
 for i in Nodes:
     for j in Nodes:
         if j != 0:
-            model.Add(start_service[j] >= start_service[i] + distance_var[0, i, j]).OnlyEnforceIf(x_var[0, i, j])
+            model.Add(start_service[j] == start_service[i] + distance_var[0, i, j]).OnlyEnforceIf(x_var[0, i, j])
 
 
 
@@ -39,26 +39,24 @@ print('type of x_var element', type(x_var[0, 0, 1]), '\n')
 # if a node is visited, the car must leave this node
 for i in Nodes:
     for j in Nodes:
-        model.Add(sum(x_var[0, j, :]) == 1).OnlyEnforceIf(x_var[0, i, j])
-        model.AddImplication(x_var[0, i, j], x_var[0, j, i].Not())
+        model.Add(sum(x_var[0, :, i]) == 1)  # every node should be visited once
+        model.Add(sum(x_var[0, j, :]) == 1).OnlyEnforceIf(x_var[0, i, j])  # vehicle visit a node also leaves it
+        # model.Add(x_var[0, j, i] == 0).OnlyEnforceIf(x_var[0, i, j])
         if i == j:
             model.Add(x_var[0, i, j] == 0)
             model.Add(distance_var[0, i, j] == 0)
         else:
             model.Add(distance_var[0, i, j] == distance[(i, j)]).OnlyEnforceIf(x_var[0, i, j])
-# every node should be visited once
-for i in Nodes:
-    model.Add(sum(x_var[0, :, i]) == 1)
 
-sum_distance = []
-for i in Nodes:
-    for j in Nodes:
-        sum_distance.append(distance_var[0, i, j])
-print('sum distance is\n', sum_distance, '\n')
+print('service time is', type(service_time))
+
+# max_of_service_time = np.amax(service_time)
+# index_of_max = np.where(service_time == max_of_service_time)
+# makespan = max_of_service_time + distance[(index_of_max, 0)]
 
 
-#model.Minimize(sum(sum_distance))
-model.Minimize()
+# model.Minimize(sum(sum_distance))
+model.Minimize(makespan)
 solver = cp_model.CpSolver()
 status = solver.Solve(model)
 # turn on the log if needed
@@ -77,3 +75,4 @@ else:
     print('failed')
 
 print('total distance in solution\n', sum(distance_solution))
+
