@@ -1,0 +1,4 @@
+1, callable
+2, construct
+3, class,object,class methods,functions etc.OOP
+
