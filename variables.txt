@@ -1,0 +1,5 @@
+x_var[k, i, j] = model.NewBoolVar(f'v{k} {i} -> {j}')
+distance_var[i, j] = model.NewIntVar(f'distance {i} -> {j}') #really neccessery?
+start_service[i] = model.NewIntVar(f'start service at node {i}')
+service_time[i] = model.NewIntVar(f'service time at node {i}')
+

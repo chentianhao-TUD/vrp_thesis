@@ -1,0 +1,6 @@
+notes when lerning cp sat and python
+
+useful moduls python:
+	itertools (build for loop more efficiently)
+		accumulate()
+		permutations(iterator, r)

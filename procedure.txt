@@ -1,0 +1,16 @@
+1. how to create an arc (an arc is just a tuple of (int, int, BoolVar)) 
+    1) Nodes = [...] (create or import Nodes as a list, it will be used a iterable later)
+    2) literals = {}
+       arcs = []
+    3) set NewBoolVar as value in literals, append it in arcs as 3. element
+       for i in Nodes:
+	   literals[0,i] = model.NewBoolVar(f'0 -> {i}')
+	   literals[i,0] = model.NewBoolVar(f'{i} -> 0')
+	   arcs.append([0, i, literals[0, i])
+	   arcs.append([i, 0, literals[i, 0])
+    4) use itertools.permutations to generate all combinations of arcs
+    	for i, j in permutations(Nodes, 2)
+	    literals[i, j] = model.NewBoolVar(f'{i} -> {j}')
+	    arcs.append([i, j, literals[i, j]])
+    5) model.AddCircuit(arcs)
+
