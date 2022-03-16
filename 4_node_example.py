@@ -53,33 +53,43 @@ for i in Nodes:
         model.Add(start_service[j] >= start_service[i] + distance_var[0, i, j] + service_time[i]).OnlyEnforceIf(x_var[0, i, j])
 
 # arcs
-arcs = np.empty([len(Nodes), 2], dtype=object)
+# arcs = np.empty([len(Nodes), 2], dtype=object)
+arcs = []
 for k in range(len(Nodes)):
-    for i in Nodes:
-        for j in Nodes:
-            arcs[k][0] = model.NewIntVar(0, len(Nodes), '')
-            arcs[k][1] = model.NewIntVar(0, len(Nodes), '')
-            model.Add(arcs[k][0] == i).OnlyEnforceIf(x_var[0, i, j])
-            model.Add(arcs[k][1] == j).OnlyEnforceIf(x_var[0, i, j])
+    arcs.append((model.NewIntVar(0, len(Nodes), ''), model.NewIntVar(0, len(Nodes), '')))
+    # for i in Nodes:
+    #     for j in Nodes:
+    #         arcs[k][0] = model.NewIntVar(0, len(Nodes), '')
+    #         arcs[k][1] = model.NewIntVar(0, len(Nodes), '')
+    #         model.Add(arcs[k][0] == i).OnlyEnforceIf(x_var[0, i, j])
+    #         model.Add(arcs[k][1] == j).OnlyEnforceIf(x_var[0, i, j])
 
 print(arcs)
+model.AddCircuit(arcs)
 '''
 # routes
-route = [0]
+route = np.empty(len(Nodes), dtype=object)
+for i in range(len(Nodes)):
+    route[i] = model.NewIntVar(0, len(Nodes), '')
+list_route = list(route)
 count = 1
-m = 0
 len_route = len(Nodes)
-while count < len_route:
-    for i in range(len(arcs)):
-        if arcs[i][0] == m:
-            route.append(arcs[i][1])
-            m = arcs[i][1]
-            count += 1
+model.Add(route[0] == 0)
+m = 0
+while count < 4:
+    for i in Nodes:
+        for j in Nodes:
+            if i == m:
+                model.AddElement(count, list_route, j).OnlyEnforceIf(x_var[0, i, j])
+                # model.Add(m == j).OnlyEnforceIf(x_var[0, i, j])
+    count += 1
+
+print(route)
 '''
 max_start_service = model.NewIntVar(0, 10000, 'start time on last node')
 model.AddMaxEquality(max_start_service, start_service)
-# makespan = max_start_service + distance_var[0, route[len(Nodes)], 0]
-
+# makespan = max_start_service + distance_var[0, route[len(Nodes) - 1], 0]
+#
 # model.Minimize(makespan)
 solution_printer = cp_model.VarArraySolutionPrinter(start_service)
 solver = cp_model.CpSolver()
@@ -89,7 +99,7 @@ status = solver.Solve(model, solution_printer)
 # solver.parameters.log_search_progress = True
 solver.Solve(model)
 
-if status == cp_model.OPTIMAL:
+if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
     print('found optimal solution\n')
     print(solver.ObjectiveValue())
     for i in Nodes:
@@ -98,12 +108,14 @@ if status == cp_model.OPTIMAL:
                 print('vehicle is travelling from {} to {}'.format(i, j))
                 print('start time of service at {} is'.format(j), solver.Value(start_service[j]))
                 print('service time at node {} is'.format(j), solver.Value(service_time[j]))
+    for k in range(len(route)):
+        print('route', solver.Value(route[k]))
 
 else:
     print('failed')
 
 
-print('max_start_service is', solver.Value(max_start_service))
+# print('max_start_service is', solver.Value(max_start_service))
 # print(np.where(start_service == solver.Value(max_start_service)))
 
 
