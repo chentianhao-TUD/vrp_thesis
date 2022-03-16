@@ -52,22 +52,46 @@ for i in Nodes:
     for j in Nodes[1:]:
         model.Add(start_service[j] >= start_service[i] + distance_var[0, i, j] + service_time[i]).OnlyEnforceIf(x_var[0, i, j])
 
-max_start_service = model.NewIntVar(0, 10000, 'max service time')
+# arcs
+arcs = np.empty([len(Nodes), 2], dtype=object)
+for k in range(len(Nodes)):
+    for i in Nodes:
+        for j in Nodes:
+            arcs[k][0] = model.NewIntVar(0, len(Nodes), '')
+            arcs[k][1] = model.NewIntVar(0, len(Nodes), '')
+            model.Add(arcs[k][0] == i).OnlyEnforceIf(x_var[0, i, j])
+            model.Add(arcs[k][1] == j).OnlyEnforceIf(x_var[0, i, j])
+
+print(arcs)
+'''
+# routes
+route = [0]
+count = 1
+m = 0
+len_route = len(Nodes)
+while count < len_route:
+    for i in range(len(arcs)):
+        if arcs[i][0] == m:
+            route.append(arcs[i][1])
+            m = arcs[i][1]
+            count += 1
+'''
+max_start_service = model.NewIntVar(0, 10000, 'start time on last node')
 model.AddMaxEquality(max_start_service, start_service)
+# makespan = max_start_service + distance_var[0, route[len(Nodes)], 0]
 
-# makespan = max_start_service + distance_var[0, index_of_last_node, 0]
-
-
-model.Minimize(max_start_service)
+# model.Minimize(makespan)
+solution_printer = cp_model.VarArraySolutionPrinter(start_service)
 solver = cp_model.CpSolver()
-status = solver.Solve(model)
+status = solver.Solve(model, solution_printer)
+# status = solver.SearchForAllSolutions(model, solution_printer)
 # turn on the log if needed
 # solver.parameters.log_search_progress = True
-solver.parameters.enumerate_all_solutions = True
 solver.Solve(model)
 
 if status == cp_model.OPTIMAL:
     print('found optimal solution\n')
+    print(solver.ObjectiveValue())
     for i in Nodes:
         for j in Nodes:
             if solver.Value(x_var[0, i, j]) and solver.Value(start_service[j]):
