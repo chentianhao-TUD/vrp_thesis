@@ -37,24 +37,33 @@ model.Add(start_service[0] == 0)
 print('service time is', service_time)
 
 # if a node is visited, the car must leave this node
-count = 0
-tem_1 = []
-tem_2 = []
+x_matrix = np.empty([1, 4, 4], dtype=object)
+for i in Nodes:
+    for j in Nodes:
+        if i != j:
+            x_matrix[0, i, j] = x_var[0, i, j]
+        else:
+            x_matrix[0, i, j] = model.NewBoolVar(f'v0 {i} -> {j}')
+            model.Add(x_matrix[0, i, j] == 0)
 
-while count < 4:
-    for key in x_var.keys():
-        if key[2] == count:
-            tem_1.append(x_var[key])
-        if key[1] == count:
-            tem_2.append(x_var[key])
-    model.Add(sum(tem_1) == 1)
-    model.Add(sum(tem_2) == 1)
-    print(tem_1)
-    print(tem_2)
-    tem_1.clear()
-    tem_2.clear()
-    count += 1
+print(x_matrix)
+'''
+for i in Nodes:
+    model.Add(sum(x_matrix[0, :, i]) == 1)  # every node should be visited once
+    model.Add(sum(x_matrix[0, i, :]) == 1)  # vehicle visit a node also leaves it
+    print(':,i',x_matrix[0, :, i])
+    print('i,:',x_matrix[0, i, :])
+'''
+for i in Nodes:
+    for j in Nodes:
+        model.Add(sum(x_matrix[0, :, i]) == 1)  # every node should be visited once
+        model.Add(sum(x_matrix[0, j, :]) == 1).OnlyEnforceIf(x_matrix[0, i, j])  # vehicle visit a node also leaves it
+        # model.Add(x_var[0, j, i] == 0).OnlyEnforceIf(x_var[0, i, j])
+        if i == j:
+            model.Add(x_matrix[0, i, j] == 0)
 
+        else:
+            model.Add(distance_var[0, i, j] == distance[(i, j)]).OnlyEnforceIf(x_matrix[0, i, j])
 # calculation of start service at a node
 # for i, j in permutations(Nodes, 2):
 #     model.Add(start_service[j] >= start_service[i] + distance_var[0, i, j] + service_time[i]).OnlyEnforceIf(x_var[0, i, j])
@@ -64,7 +73,7 @@ max_start_service = model.NewIntVar(0, 10000, 'start time on last node')
 model.AddMaxEquality(max_start_service, start_service)
 # makespan = max_start_service + distance_var[0, route[len(Nodes) - 1], 0]
 #
-# model.Minimize(makespan)
+model.Minimize(max_start_service)
 solution_printer = cp_model.VarArraySolutionPrinter(start_service)
 solver = cp_model.CpSolver()
 status = solver.Solve(model, solution_printer)
