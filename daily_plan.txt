@@ -1,0 +1,10 @@
+17.MAR
+*accomplish
+	successfully formulate makespan
+	found a way to represent last node in the route, but need more test
+*plan for tonight 
+	add one more vehicle 
+
+18.MAR
+*plan
+	2 vehicle + 2 robot

@@ -1,7 +1,15 @@
 *objective model.Minimize(makespan)
+	makespan = max_start_service + distance_var[0, last_node, 0] + service_time[last_node] 
+
+*max_start_service
+	model.AddMaxEquality(max_start_service, start_service)
 *every node should be visited once
 	model.Add(sum(x_var[k, :, i] == 1))
-	model.Add(sum(x_var[k, j, :] == 1)).OnlyEnforceIf(x_var[k, i, j]) # if j is visited, j also should be left once
+	model.Add(sum(x_var[k, i, :] == 1)) # if j is visited, j also should be left once
 *start service at node i
 	model.Add(start_service[j] >= start_service[i] +distance_var[0, i, j] +service_time[i]).OnlyEnforceIf(x_var[0, i, j])
+	model.Add(start_service[0] == 0)
+*AddCircuit needed?
+	model.AddCircuit(arcs)
+
 
