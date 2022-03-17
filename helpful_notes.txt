@@ -5,3 +5,6 @@ useful moduls python:
 		accumulate()
 		permutations(iterator, r)
 	collection
+
+*how to create n empty list
+	l = [[] for i in range(n)]
