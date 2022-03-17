@@ -1,43 +1,39 @@
-from itertools import permutations
 from ortools.sat.python import cp_model
+from itertools import permutations
+import numpy as np
 
+# [start input data]
+Nodes = [0, 1, 2, 3]
+x = {}
+arcs = []
 model = cp_model.CpModel()
 solver = cp_model.CpSolver()
+for i, j in permutations(Nodes, 2):
+    x[i, j] = model.NewBoolVar(f'{i} -> {j}')
+    arcs.append((i, j, x[i, j]))
 
-literals = {}
-# An arc is just a (int, int, BoolVar) tuple
-all_arcs = []
-nodes = range(1, 11)
-print(type(nodes))
+print(x)
+print(arcs)
 
-for i in nodes:
-    # We use 0 as a dummy nodes as we don't have an actual circuit
-    literals[0, i] = model.NewBoolVar(f"0 -> {i}")  # start arc
-    literals[i, 0] = model.NewBoolVar(f"{i} -> 0")  # end arc
-    all_arcs.append([0, i, literals[0, i]])
-    all_arcs.append([i, 0, literals[i, 0]])
-
-
-for i, j in permutations(nodes, 2):
-    # this booleans will be true if the arc is present
-    literals[i, j] = model.NewBoolVar(f"{i} -> {j}")
-    all_arcs.append([i, j, literals[i, j]])
-# to make an arc optional, add the [i, i, True] loop
-
-model.AddCircuit(all_arcs)
-model.Maximize(sum(literals[i, j] * abs(i - j) for i, j in permutations(nodes, 2)))
-solver.Solve(model)
+model.AddCircuit(arcs)
+p = cp_model.VarArraySolutionPrinter(x.values())
+status = solver.SearchForAllSolutions(model, p)
+solver.parameters.enumerate_all_solutions = True
+# if status == cp_model.FEASIBLE or status == cp_model.OPTIMAL:
+#     for i, j in permutations(Nodes, 2):
+#         if solver.Value(x[i, j]):
+#             print(i, j)
 
 node = 0
+count = 0
 print(node, end="")
-while True:
-    for i in nodes:
-        if i != node and solver.Value(literals[node, i]):
+while count < 4:
+    for i in Nodes:
+        if i != node and solver.Value(x[node, i]):
             print(f" -> {i}", end="")
             node = i
             break
     else:
         break
-print(" -> 0")
-
+    count += 1
 

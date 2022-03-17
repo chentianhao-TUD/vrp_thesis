@@ -2,13 +2,6 @@ from ortools.sat.python import cp_model
 from itertools import permutations
 import numpy as np
 
-
-def get_key(my_dict, val):
-    for key, value in my_dict.items():
-        if val == value:
-            return key
-
-    return "key doesn't exist"
 # [start input data]
 Nodes = [0, 1, 2, 3]
 distance = {(0, 1): 63, (1, 0): 63, (0, 2): 67, (2, 0): 67, (1, 2): 50, (2, 1): 50, (0, 3): 100, (3, 0): 100, (1, 3): 162, (3, 1): 162, (2, 3): 161, (3, 2): 161}
@@ -26,17 +19,21 @@ x_var = np.empty([1, len(Nodes), len(Nodes)], dtype=object)
 distance_var = np.empty([1, len(Nodes), len(Nodes)], dtype=object)
 service_time = np.empty(len(Nodes), dtype=object)
 start_service = np.empty(len(Nodes), dtype=object)
+arcs = []
 for i in Nodes:
     service_time[i] = model.NewIntVar(0, 10000, f'service time at node {i}')
     start_service[i] = model.NewIntVar(0, 10000, f'start service time at node {i}')
     for j in Nodes:
         x_var[0, i, j] = model.NewBoolVar(f'x {i} -> {j}')
         distance_var[0, i, j] = model.NewIntVar(0, 10000, f'distance {i} -> {j}')
+
+for i, j in permutations(Nodes, 2):
+    arcs.append((i, j, x_var[0, i, j]))
 print('x_var\n', x_var, '\n')
 print('distance_var \n', distance_var, '\n')
 print('service time \n', service_time, '\n')
 print('start service \n', start_service, '\n')
-
+print('arcs\n', arcs, '\n')
 # [end create variables]
 
 # [start add constraints]
@@ -47,6 +44,7 @@ print('start service \n', start_service, '\n')
 # 4, all node must be visited once and left once
 # 5, service time at node i equals to input data
 model.Add(start_service[0] == 0)
+model.AddCircuit(arcs)
 for i in Nodes:
     for j in Nodes:
         if i != j:
@@ -75,12 +73,13 @@ for i, j in permutations(Nodes, 2):
     if j == 0:
         last_node = i
 print(last_node)
-makespan = max_start_service + distance_var[0, last_node, 0]
+makespan = max_start_service + distance_var[0, last_node, 0] + service_time[last_node]
 model.Minimize(makespan)
 # [start call the solver]
-solution_printer = cp_model.VarArraySolutionPrinter(x_var[0, 2])
+solution_printer = cp_model.VarArraySolutionPrinter(start_service)
 status = solver.Solve(model, solution_printer)
 solver.parameters.enumerate_all_solutions = True
+# [end call the solver]
 if status == cp_model.FEASIBLE:
     print('feasible')
 elif status == cp_model.OPTIMAL:
@@ -96,3 +95,5 @@ else:
     print('failed')
 for i, j in permutations(Nodes, 2):
     print((i, j), solver.Value(x_var[0, i, j]))
+
+print(solver.Value(makespan))
