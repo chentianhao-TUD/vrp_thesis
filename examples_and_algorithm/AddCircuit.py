@@ -23,6 +23,7 @@ for i, j in permutations(nodes, 2):
     literals[i, j] = model.NewBoolVar(f"{i} -> {j}")
     all_arcs.append([i, j, literals[i, j]])
 # to make an arc optional, add the [i, i, True] loop
+print(type(sum(literals[i, j] * abs(i - j) for i, j in permutations(nodes, 2))))
 
 model.AddCircuit(all_arcs)
 model.Maximize(sum(literals[i, j] * abs(i - j) for i, j in permutations(nodes, 2)))

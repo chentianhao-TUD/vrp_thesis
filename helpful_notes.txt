@@ -4,3 +4,4 @@ useful moduls python:
 	itertools (build for loop more efficiently)
 		accumulate()
 		permutations(iterator, r)
+	collection
