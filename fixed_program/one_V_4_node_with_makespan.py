@@ -57,7 +57,7 @@ for i in Nodes:
         model.Add(start_service[j] >= start_service[i] + distance_var[0, i, j] + service_time[i]).OnlyEnforceIf(x_var[0, i, j])
 
 for i in Nodes:
-    model.Add(sum(x_var[0, :, i]) == 1)
+    model.AddExactlyOne(x_var[0, :, i])
     model.Add(sum(x_var[0, i, :]) == 1)
     model.Add(service_time[i] == demand[i])
     print(x_var[0, :, i])

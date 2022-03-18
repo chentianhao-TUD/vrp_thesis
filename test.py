@@ -11,11 +11,13 @@ solver = cp_model.CpSolver()
 for i, j in permutations(Nodes, 2):
     x[i, j] = model.NewBoolVar(f'{i} -> {j}')
     arcs.append((i, j, x[i, j]))
+    model.AddExactlyOne(x[i, j])
 
 print(x)
 print(arcs)
 
 model.AddCircuit(arcs)
+
 p = cp_model.VarArraySolutionPrinter(x.values())
 status = solver.SearchForAllSolutions(model, p)
 solver.parameters.enumerate_all_solutions = True
@@ -36,4 +38,3 @@ while count < 4:
     else:
         break
     count += 1
-

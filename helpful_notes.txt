@@ -8,3 +8,38 @@ useful moduls python:
 
 *how to create n empty list
 	l = [[] for i in range(n)]
+
+*linux useful command
+	*how to create a new soft link
+		ln -sfn /newpath file (file now points to newpath)
+	*show os version
+		cat /etc/os-release
+	*show where python packages are installed
+		python -m site
+	*find all python installed 
+		whereis python
+	*show the path of a softlink
+		readlink -f symlinkName
+*how to install or-tools from source:
+	1) visit https://developers.google.com/optimization/install/python/source_linux
+	2) git pull origin master
+	3) install required tools
+	4) make third_party
+	5) make python
+	6) make install_python
+	7) if error 127, set the envir. variable manually
+	8) select the python in dependencies/python/venv/bin 
+	*reinstall
+		make clean third_party
+		make third_party
+		make python
+		make install_python (add PATH if needed)
+		select the python version
+*big problems
+	*update-alternatives can break things, if it does:
+		sudo apt remove python3-apt
+		sudo apt autoremove
+		sudo apt autoclean
+		sudo apt install python3-apt
+*Advance Linux
+		*python: the system will search a installed python version in $PATH, the order in $PATH matters. the system which select who comes first. by default, python is installed in /usr/bin and linked to a file such as /usr/bin/python3.9. 
