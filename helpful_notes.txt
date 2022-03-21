@@ -5,7 +5,11 @@ useful moduls python:
 		accumulate()
 		permutations(iterator, r)
 	collection
-
+		namedtuple: student = collection.namedtuple('student', 'age scor
+			    e ID ...') e.g. Li = student('24','90','784442') 
+			    Li.age = 24
+		defaultdict: ddict = collections.defaultdict(list) creates item
+			     if a key dosen`t exist yet e.g. ddict[m] = [1, 2]
 *how to create n empty list
 	l = [[] for i in range(n)]
 
