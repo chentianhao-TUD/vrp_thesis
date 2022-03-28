@@ -10,4 +10,10 @@
 	2 vehicle + 2 robot
 	17.Mar problem: model.Add(sum(x_var[0, :, i] == 1)) not working, try to build lastest version and use AddExactlyOne
 	read how to identify which constraint is not working and exam all constraints
-	if has time, send an Email to David 
+	if has time, send an Email to David
+
+28.MAR
+*plan 
+	try on the method provided in example nurse scheduling
+	read 30 page python book
+ 

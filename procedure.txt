@@ -14,3 +14,10 @@
 	    arcs.append([i, j, literals[i, j]])
     5) model.AddCircuit(arcs)
 
+2. how to iterate in cp_model
+	1) list: Nodes, Vehicles
+	   dict: x_var
+	2) for k in Vehicles:
+		for i in Nodes:
+			model.AddExactlyOne(x[(k, i, j)] for j in Nodes)
+	3) this create a constraint: every Node j must be visited once, dosent matter by which k and from which Node 
