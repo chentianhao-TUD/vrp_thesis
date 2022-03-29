@@ -39,7 +39,7 @@ useful moduls python:
 		make python
 		make install_python (add PATH if needed)
 		select the python version
-	*if make python failed and shows CMake can not find python3, try sudo apt-get install python	    3-dev
+	*if make python failed and shows CMake can not find python3, try sudo apt-get install 		 python3-dev
 *big problems
 	*update-alternatives can break things, if it does:
 		sudo apt remove python3-apt
@@ -48,4 +48,6 @@ useful moduls python:
 		sudo apt install python3-apt
 *Advance Linux
 		*python: the system will search a installed python version in $PATH, the order in $PATH matters. the system which select who comes first. by default, python is installed in /usr/bin and linked to a file such as /usr/bin/python3.9.
-		 
+
+*git usage
+	* git clone http		 
