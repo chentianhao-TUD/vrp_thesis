@@ -48,4 +48,8 @@ useful moduls python:
 		sudo apt install python3-apt
 *Advance Linux
 		*python: the system will search a installed python version in $PATH, the order in $PATH matters. the system which select who comes first. by default, python is installed in /usr/bin and linked to a file such as /usr/bin/python3.9.
-		 
+
+*problems related to git
+	1) use ssh instead of https: git config --global url.ssh://git@github.co           m/.insteadOf https://github.com/
+	2) git merge: merge a branch into the current branch
+	3) git branch -d branch_name: delete a branch		 
