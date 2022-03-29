@@ -1,5 +1,7 @@
 notes when lerning cp sat and python
 
+----------start_python_skill----------
+
 useful moduls python:
 	itertools (build for loop more efficiently)
 		accumulate()
@@ -13,6 +15,12 @@ useful moduls python:
 *how to create n empty list
 	l = [[] for i in range(n)]
 
+*useful tricks
+	*assert condition
+
+----------end_python_skill ----------
+
+----------start_linux_skill----------
 *linux useful command
 	*how to create a new soft link
 		ln -sfn /newpath file (file now points to newpath)
@@ -24,6 +32,8 @@ useful moduls python:
 		whereis python
 	*show the path of a softlink
 		readlink -f symlinkName
+----------end_linux_skill----------
+
 *how to install or-tools from source:
 	1) visit https://developers.google.com/optimization/install/python/source_linux
 	2) git pull origin master
