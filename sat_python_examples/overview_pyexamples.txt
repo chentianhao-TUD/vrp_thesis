@@ -1,0 +1,23 @@
+notes from the examples.
+
+1) each worker is assigned at most one task:
+for worker in range(..):
+	model.AddAtMostOne(x[worker, task] for task in range(...)
+2) each task is assigned to exactly one worker:
+for task in range(...):
+	model.AddExactlyOne(x[worker, task] for worker in range(...)
+3) the element that needs to be assigned, comes in the for statement
+
+4) group = [
+		[0,1,0,1],
+		[...],
+		...,
+	]
+   model.AddAllowedAssignments(worker[i], worker[j], ..., group)
+
+own thoughts:
+1) obj = []
+   input = []
+   x_var = []
+   input[i, j] * x_var[i, j] then append to obj can work
+

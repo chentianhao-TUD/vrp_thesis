@@ -16,4 +16,10 @@
 *plan 
 	try on the method provided in example nurse scheduling
 	read 30 page python book
- 
+*result
+	no output
+	not enough 30 page
+
+29.MAR
+*plan
+	finish reading python examples for sat 

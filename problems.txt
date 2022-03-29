@@ -1,4 +1,4 @@
 1. a) a value to be determine after the solve process
    b) the solve process needs that value
    c) how to represent that value before solve
-   d) 
+   d) whats the difference between loop inside and outside a model.Add() 
