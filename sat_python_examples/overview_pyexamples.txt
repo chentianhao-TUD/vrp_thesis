@@ -15,6 +15,10 @@ for task in range(...):
 	]
    model.AddAllowedAssignments(worker[i], worker[j], ..., group)
 
+5) generating a variable and store it as value in a dict
+   x = model.NewBoolVar()
+   x_dict[(i, j)] = x
+ 
 own thoughts:
 1) obj = []
    input = []
