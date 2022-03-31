@@ -32,44 +32,57 @@ for k in Vehicle:
 for k in Vehicle:
     for i in Nodes:
         for j in Nodes:
-            model.AddImplication(single_K[k, i, j], any_k[i, j])
-            model.AddImplication(any_k[i, j].Not(), single_K[k, i, j].Not())
-
+            model.Add(any_k[i, j] == 1).OnlyEnforceIf(single_K[k, i, j])
+            model.Add(single_K[k, i, j] == 0).OnlyEnforceIf(any_k[i, j].Not())
 for i in Nodes:
     for j in Nodes:
         if i == j:
             model.Add(any_k[i, j] == 0)
+        for k in Vehicle:
+            if i == j:
+                model.Add(single_K[k, i, j] == 0)
 
 for j in Nodes:
     model.AddAtLeastOne(single_K[k, i, j] for k in Vehicle for i in Nodes)
+    for k in Vehicle:
+        model.Add(sum(single_K[k, i, j] for i in Nodes) == sum(single_K[k, j, i] for i in Nodes))
 
 for k in Vehicle:
     model.AddExactlyOne(single_K[k, i, 0] for i in Nodes)
 
-for i in Nodes:
-    for j in Nodes:
-        for k in Vehicle:
-            model.AddExactlyOne(single_K[k, i, j]).OnlyEnforceIf(single_K[k, i, h])
+
+for k in Vehicle:
+    model.AddExactlyOne(single_K[k, 0, j] for j in Nodes[1:])
 
 model.Add(start_time[0] == 0)
 
+for i in Nodes:
+    for j in Nodes[1:]:
+        if i != j:
+            model.Add(start_time[j] >= start_time[i] + service_time[i] + distance[i, j]).OnlyEnforceIf(
+                any_k[i, j])
+
 for k in Vehicle:
     for i in Nodes[1:]:
-        model.Add(time_back_to_depot[k] >= start_time[i] + service_time[i] + distance[i, 0]).OnlyEnforceIf(
+        model.Add(time_back_to_depot[k] == start_time[i] + service_time[i] + distance[i, 0]).OnlyEnforceIf(
             single_K[k, i, 0])
+
 
 obj = model.NewIntVar(0, 9999, 'obj')
 model.AddMaxEquality(obj, time_back_to_depot.values())
 model.Minimize(obj)
 
 status = solver.Solve(model)
-if status == cp_model.OPTIMAL:
+if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
     print(solver.ObjectiveValue())
+    for k in Vehicle:
+        if solver.Value(time_back_to_depot[k]):
+            print(f'v{k}', solver.Value(time_back_to_depot[k]))
     for i in Nodes:
         for j in Nodes:
             for k in Vehicle:
                 if solver.Value(single_K[k, i, j]):
                     print(single_K[k, i, j])
 else:
-    print('failed')
+    print(solver.StatusName())
 
