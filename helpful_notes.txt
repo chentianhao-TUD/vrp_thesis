@@ -60,6 +60,9 @@ You can create constraints and the objective from lists of linear expressions or
 as follows:
 model.Minimize(cp_model.LinearExpr.Sum(expressions))
 model.Add(cp_model.LinearExpr.WeightedSum(expressions, coefficients) >= 0)
+
+*AddDivision: avoid 0 division
+
 ----------CP-SAT----------
 
 ----------Problems----------
