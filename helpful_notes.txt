@@ -82,5 +82,5 @@ model.Add(cp_model.LinearExpr.WeightedSum(expressions, coefficients) >= 0)
 	1) use ssh instead of https: git config --global url.ssh://git@github.co           m/.insteadOf https://github.com/
 	2) git merge: merge a branch into the current branch
 	3) git branch -d branch_name: delete a branch		 
-
+	4) git clean -fd: delete all untracked files
 ----------GIT----------
