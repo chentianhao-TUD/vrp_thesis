@@ -78,16 +78,19 @@ for i, j in permutations(Nodes, 2):
                 any_K[i, j])
 
 # the time that a vehicle k returns to the depot
-for i, j in permutations(Nodes, 2):
-    if i != 0 and j == 0:
-        for k in Vehicle:
-            model.Add(time_back_to_depot_K[k] >= start_time_K[i] + distance[i, j]).\
-                OnlyEnforceIf(single_K[k, i, j])
-        for r in Robot:
-            model.Add(time_back_to_depot_R[r] >= start_time_R[i] + demand[i] + distance[i, j]).OnlyEnforceIf(
-                single_R[r, i, j])
 
+for k in Vehicle:
+    for i in Nodes[1:]:
+        time_back_to_depot_K[k] = model.NewIntVar(0, 9999, f'v{k} back to depot')
+        model.Add(time_back_to_depot_K[k] >= start_time_K[i] + distance[i, 0]).\
+            OnlyEnforceIf(single_K[k, i, 0])
+for r in Robot:
+    for i in Nodes[1:]:
+        time_back_to_depot_R[r] = model.NewIntVar(0, 9999, f'r{r} back to depot')
+        model.Add(time_back_to_depot_R[r] >= start_time_R[i] + demand[i] + distance[i, 0]).OnlyEnforceIf(
+            single_R[r, i, 0])
 
+print(time_back_to_depot_R, time_back_to_depot_K)
 status = solver.Solve(model)
 if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
     print(solver.StatusName())
