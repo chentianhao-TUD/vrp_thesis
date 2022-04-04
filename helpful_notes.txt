@@ -15,9 +15,13 @@ useful moduls python:
 *how to create n empty list
 	l = [[] for i in range(n)]
 
+*basic knowledge:
+	*list[a:b] include a, not include b
 *useful tricks
 	*assert condition
-
+	*merge two dict: dict_1 = {}, dict_2 = {}, dict_3 = {**dict_1, **dict_2}
+	 common key will be overwritten as the pair in dict_2	
+	*np.hypot(leg_1, leg_2) return third line of a triangle with given 2 legs
 ----------python----------
 
 ----------linux----------

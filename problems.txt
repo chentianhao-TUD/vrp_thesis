@@ -2,3 +2,8 @@
    b) the solve process needs that value
    c) how to represent that value before solve
    d) whats the difference between loop inside and outside a model.Add() 
+
+2. questions:
+
+* max robots from i to j, = transport_capacity? not cap*num(vihecle)?
+
