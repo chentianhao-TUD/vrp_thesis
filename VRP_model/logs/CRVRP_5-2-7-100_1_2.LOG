@@ -1,0 +1,89 @@
+
+Gurobi 9.0.3 (win64) logging started Sat Feb  5 17:52:11 2022
+
+Changed value of parameter LogFile to logs\CRVRP_5-2-7-100_1_2.LOG
+   Prev: logs\CRVRP_5-2-7-100_1_1.LOG  Default: 
+Changed value of parameter Seed to 1114696931
+   Prev: 828108836  Min: 0  Max: 2000000000  Default: 0
+Parameter Threads unchanged
+   Value: 2  Min: 0  Max: 1024  Default: 0
+Parameter TimeLimit unchanged
+   Value: 60.0  Min: 0.0  Max: inf  Default: inf
+Parameter Symmetry unchanged
+   Value: 2  Min: -1  Max: 2  Default: -1
+Parameter Cuts unchanged
+   Value: 2  Min: -1  Max: 3  Default: -1
+Parameter PreDepRow unchanged
+   Value: 1  Min: -1  Max: 1  Default: -1
+Parameter ScaleFlag unchanged
+   Value: 1  Min: -1  Max: 3  Default: -1
+Parameter NormAdjust unchanged
+   Value: 0  Min: -1  Max: 3  Default: -1
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (win64)
+Optimize a model with 1001 rows, 810 columns and 4006 nonzeros
+Model fingerprint: 0x60801deb
+Variable types: 32 continuous, 778 integer (522 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+06]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+04]
+  RHS range        [1e+00, 1e+06]
+Presolve removed 618 rows and 515 columns
+Presolve time: 0.03s
+Presolved: 383 rows, 295 columns, 2048 nonzeros
+Variable types: 15 continuous, 280 integer (230 binary)
+
+Root relaxation: objective 3.141848e+02, 258 iterations, 0.01 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  314.18479    0   39          -  314.18479      -     -    0s
+H    0     0                    1508.1726763  314.18479  79.2%     -    0s
+H    0     0                     766.5396906  314.18479  59.0%     -    0s
+     0     0  340.82337    0   44  766.53969  340.82337  55.5%     -    0s
+     0     0  353.20922    0   55  766.53969  353.20922  53.9%     -    0s
+H    0     0                     751.0500031  353.20922  53.0%     -    0s
+H    0     0                     751.0500030  353.20922  53.0%     -    0s
+     0     0  353.21093    0   56  751.05000  353.21093  53.0%     -    0s
+     0     0  355.91063    0   52  751.05000  355.91063  52.6%     -    0s
+H    0     0                     700.7315100  355.91063  49.2%     -    0s
+     0     0  355.91106    0   59  700.73151  355.91106  49.2%     -    0s
+     0     0  361.12842    0   51  700.73151  361.12842  48.5%     -    0s
+     0     0  361.22297    0   48  700.73151  361.22297  48.5%     -    0s
+     0     0  361.22297    0   48  700.73151  361.22297  48.5%     -    0s
+     0     0  365.77462    0   53  700.73151  365.77462  47.8%     -    0s
+     0     0  365.78122    0   53  700.73151  365.78122  47.8%     -    0s
+     0     0  365.82126    0   59  700.73151  365.82126  47.8%     -    0s
+     0     0  365.82126    0   54  700.73151  365.82126  47.8%     -    0s
+H    0     0                     671.5320539  365.82126  45.5%     -    0s
+H    0     0                     582.6224852  365.82126  37.2%     -    0s
+H    0     0                     574.8031839  365.82126  36.4%     -    0s
+     0     2  365.82126    0   50  574.80318  365.82126  36.4%     -    0s
+H   67    62                     550.8425395  368.82579  33.0%  26.3    0s
+H  126    96                     477.0944861  381.73059  20.0%  20.9    0s
+*  198    91              20     469.2508989  400.98741  14.5%  16.9    0s
+*  241   105              22     452.4321143  404.67387  10.6%  16.7    0s
+
+Cutting planes:
+  Gomory: 5
+  Cover: 4
+  Implied bound: 15
+  Clique: 4
+  MIR: 16
+  StrongCG: 3
+  Flow cover: 50
+  GUB cover: 1
+  Inf proof: 5
+  Zero half: 4
+  RLT: 67
+  Relax-and-lift: 15
+
+Explored 554 nodes (7499 simplex iterations) in 0.76 seconds
+Thread count was 2 (of 8 available processors)
+
+Solution count 10: 452.432 469.251 477.094 ... 766.54
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.524321143066e+02, best bound 4.524321143066e+02, gap 0.0000%
+Discarded solution information

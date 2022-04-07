@@ -1,0 +1,89 @@
+
+Gurobi 9.0.3 (win64) logging started Sat Feb  5 17:52:47 2022
+
+Changed value of parameter LogFile to logs\CRVRP_5-2-7-100_3_8.LOG
+   Prev: logs\CRVRP_5-2-7-100_3_7.LOG  Default: 
+Changed value of parameter Seed to 1695350279
+   Prev: 1870639910  Min: 0  Max: 2000000000  Default: 0
+Parameter Threads unchanged
+   Value: 2  Min: 0  Max: 1024  Default: 0
+Parameter TimeLimit unchanged
+   Value: 60.0  Min: 0.0  Max: inf  Default: inf
+Parameter Symmetry unchanged
+   Value: 2  Min: -1  Max: 2  Default: -1
+Parameter Cuts unchanged
+   Value: 2  Min: -1  Max: 3  Default: -1
+Parameter PreDepRow unchanged
+   Value: 1  Min: -1  Max: 1  Default: -1
+Parameter ScaleFlag unchanged
+   Value: 1  Min: -1  Max: 3  Default: -1
+Parameter NormAdjust unchanged
+   Value: 0  Min: -1  Max: 3  Default: -1
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (win64)
+Optimize a model with 1001 rows, 810 columns and 4006 nonzeros
+Model fingerprint: 0x0eed8711
+Variable types: 32 continuous, 778 integer (522 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+06]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+04]
+  RHS range        [1e+00, 1e+06]
+Presolve removed 617 rows and 515 columns
+Presolve time: 0.02s
+Presolved: 384 rows, 295 columns, 2048 nonzeros
+Variable types: 15 continuous, 280 integer (230 binary)
+Found heuristic solution: objective 1870.3317726
+
+Root relaxation: objective 4.231442e+02, 188 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  423.14425    0   26 1870.33177  423.14425  77.4%     -    0s
+H    0     0                    1309.1976100  423.14425  67.7%     -    0s
+H    0     0                     924.1976100  423.14425  54.2%     -    0s
+     0     0  423.14425    0   31  924.19761  423.14425  54.2%     -    0s
+H    0     0                     908.2563680  423.14425  53.4%     -    0s
+H    0     0                     668.1442497  423.14425  36.7%     -    0s
+     0     0  423.14425    0   21  668.14425  423.14425  36.7%     -    0s
+H    0     0                     663.2563680  423.14425  36.2%     -    0s
+     0     0  423.14425    0   24  663.25637  423.14425  36.2%     -    0s
+     0     0  423.14425    0   19  663.25637  423.14425  36.2%     -    0s
+H    0     0                     631.0722674  423.14425  32.9%     -    0s
+     0     0  423.14425    0   25  631.07227  423.14425  32.9%     -    0s
+     0     0  423.14425    0   19  631.07227  423.14425  32.9%     -    0s
+     0     0  423.14425    0   15  631.07227  423.14425  32.9%     -    0s
+H    0     0                     598.3976798  423.14425  29.3%     -    0s
+H    0     0                     570.6283991  423.14425  25.8%     -    0s
+     0     2  423.14425    0   14  570.62840  423.14425  25.8%     -    0s
+H   15    33                     529.9129668  423.14425  20.1%  54.7    0s
+*   44    64              22     462.8431965  423.14425  8.58%  42.0    0s
+*  155    86              15     455.1694660  423.14425  7.04%  22.5    0s
+*  278   114              15     446.4766326  423.14425  5.23%  23.2    0s
+H  672   151                     442.4654822  423.14425  4.37%  23.6    1s
+*  743   138               7     441.3571560  423.14425  4.13%  23.1    1s
+H  766   140                     441.3571559  423.14425  4.13%  23.7    1s
+*  894   110              21     435.8482335  424.07406  2.70%  23.1    1s
+
+Cutting planes:
+  Learned: 6
+  Gomory: 5
+  Cover: 10
+  Implied bound: 53
+  Projected implied bound: 6
+  MIR: 59
+  StrongCG: 2
+  Flow cover: 155
+  GUB cover: 1
+  Zero half: 13
+  RLT: 96
+  Relax-and-lift: 51
+
+Explored 1042 nodes (24312 simplex iterations) in 1.81 seconds
+Thread count was 2 (of 8 available processors)
+
+Solution count 10: 435.848 441.357 442.465 ... 631.072
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.358482335467e+02, best bound 4.358482335467e+02, gap 0.0000%
+Discarded solution information

@@ -1,0 +1,92 @@
+
+Gurobi 9.0.3 (win64) logging started Sat Feb  5 17:52:07 2022
+
+Changed value of parameter LogFile to logs\CRVRP_5-2-7-100_0_9.LOG
+   Prev: logs\CRVRP_5-2-7-100_0_8.LOG  Default: 
+Changed value of parameter Seed to 508407471
+   Prev: 1325657777  Min: 0  Max: 2000000000  Default: 0
+Parameter Threads unchanged
+   Value: 2  Min: 0  Max: 1024  Default: 0
+Parameter TimeLimit unchanged
+   Value: 60.0  Min: 0.0  Max: inf  Default: inf
+Parameter Symmetry unchanged
+   Value: 2  Min: -1  Max: 2  Default: -1
+Parameter Cuts unchanged
+   Value: 2  Min: -1  Max: 3  Default: -1
+Parameter PreDepRow unchanged
+   Value: 1  Min: -1  Max: 1  Default: -1
+Parameter ScaleFlag unchanged
+   Value: 1  Min: -1  Max: 3  Default: -1
+Parameter NormAdjust unchanged
+   Value: 0  Min: -1  Max: 3  Default: -1
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (win64)
+Optimize a model with 1001 rows, 810 columns and 4006 nonzeros
+Model fingerprint: 0xe35a85c4
+Variable types: 32 continuous, 778 integer (522 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+06]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+04]
+  RHS range        [1e+00, 1e+06]
+Presolve removed 618 rows and 515 columns
+Presolve time: 0.02s
+Presolved: 383 rows, 295 columns, 2037 nonzeros
+Variable types: 15 continuous, 280 integer (230 binary)
+
+Root relaxation: objective 3.421916e+02, 249 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  342.19162    0   38          -  342.19162      -     -    0s
+H    0     0                    1687.6274436  342.19162  79.7%     -    0s
+H    0     0                    1108.4680097  342.19162  69.1%     -    0s
+     0     0  374.21008    0   50 1108.46801  374.21008  66.2%     -    0s
+H    0     0                    1055.0534810  374.21008  64.5%     -    0s
+H    0     0                     847.8304088  374.21008  55.9%     -    0s
+H    0     0                     749.3814989  374.21008  50.1%     -    0s
+     0     0  384.39037    0   53  749.38150  384.39037  48.7%     -    0s
+     0     0  384.86157    0   53  749.38150  384.86157  48.6%     -    0s
+     0     0  384.86157    0   59  749.38150  384.86157  48.6%     -    0s
+     0     0  389.68985    0   60  749.38150  389.68985  48.0%     -    0s
+     0     0  389.68985    0   56  749.38150  389.68985  48.0%     -    0s
+     0     0  391.96696    0   60  749.38150  391.96696  47.7%     -    0s
+H    0     0                     689.9915670  391.96696  43.2%     -    0s
+     0     0  392.53864    0   49  689.99157  392.53864  43.1%     -    0s
+     0     0  392.54574    0   49  689.99157  392.54574  43.1%     -    0s
+     0     0  392.55813    0   60  689.99157  392.55813  43.1%     -    0s
+     0     0  392.55813    0   54  689.99157  392.55813  43.1%     -    0s
+H    0     0                     671.7557263  392.58087  41.6%     -    0s
+     0     2  392.58087    0   54  671.75573  392.58087  41.6%     -    0s
+H    4     6                     619.3066103  392.60543  36.6%  86.8    0s
+*   56    60              22     602.2037143  392.87374  34.8%  39.6    0s
+*   72    66              26     536.4964777  393.08178  26.7%  36.6    0s
+H  302   111                     534.6272446  393.17915  26.5%  19.3    0s
+*  333   131              29     493.4748039  393.17915  20.3%  18.9    0s
+* 1010   163              16     490.8833582  461.64771  5.96%  14.1    1s
+* 1079   181              18     483.4025325  462.91171  4.24%  13.8    1s
+H 1330   143                     480.5803171  462.91171  3.68%  13.2    1s
+* 1860    90              16     474.5297041  474.52970  0.00%  11.0    1s
+
+Cutting planes:
+  Gomory: 15
+  Cover: 14
+  Implied bound: 58
+  Projected implied bound: 2
+  Clique: 6
+  MIR: 45
+  StrongCG: 1
+  Flow cover: 192
+  Inf proof: 3
+  Zero half: 1
+  RLT: 194
+  Relax-and-lift: 122
+
+Explored 2017 nodes (21930 simplex iterations) in 1.88 seconds
+Thread count was 2 (of 8 available processors)
+
+Solution count 10: 474.53 480.58 483.403 ... 671.756
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.745297040578e+02, best bound 4.745297040578e+02, gap 0.0000%
+Discarded solution information

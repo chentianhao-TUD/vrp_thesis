@@ -1,0 +1,87 @@
+
+Gurobi 9.0.3 (win64) logging started Sat Feb  5 17:53:02 2022
+
+Changed value of parameter LogFile to logs\CRVRP_5-2-7-100_4_9.LOG
+   Prev: logs\CRVRP_5-2-7-100_4_8.LOG  Default: 
+Changed value of parameter Seed to 1723954958
+   Prev: 1998990792  Min: 0  Max: 2000000000  Default: 0
+Parameter Threads unchanged
+   Value: 2  Min: 0  Max: 1024  Default: 0
+Parameter TimeLimit unchanged
+   Value: 60.0  Min: 0.0  Max: inf  Default: inf
+Parameter Symmetry unchanged
+   Value: 2  Min: -1  Max: 2  Default: -1
+Parameter Cuts unchanged
+   Value: 2  Min: -1  Max: 3  Default: -1
+Parameter PreDepRow unchanged
+   Value: 1  Min: -1  Max: 1  Default: -1
+Parameter ScaleFlag unchanged
+   Value: 1  Min: -1  Max: 3  Default: -1
+Parameter NormAdjust unchanged
+   Value: 0  Min: -1  Max: 3  Default: -1
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (win64)
+Optimize a model with 1001 rows, 810 columns and 4006 nonzeros
+Model fingerprint: 0x10dd05f9
+Variable types: 32 continuous, 778 integer (522 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+06]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+04]
+  RHS range        [1e+00, 1e+06]
+Presolve removed 616 rows and 515 columns
+Presolve time: 0.02s
+Presolved: 385 rows, 295 columns, 2069 nonzeros
+Variable types: 15 continuous, 280 integer (230 binary)
+
+Root relaxation: objective 3.372064e+02, 218 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  337.20636    0   39          -  337.20636      -     -    0s
+H    0     0                    1328.4214712  337.20636  74.6%     -    0s
+H    0     0                    1043.5685090  337.20636  67.7%     -    0s
+     0     0  362.52690    0   58 1043.56851  362.52690  65.3%     -    0s
+     0     0  362.52690    0   58 1043.56851  362.52690  65.3%     -    0s
+     0     0  372.56547    0   53 1043.56851  372.56547  64.3%     -    0s
+H    0     0                    1012.3226438  372.56547  63.2%     -    0s
+     0     0  372.56547    0   60 1012.32264  372.56547  63.2%     -    0s
+     0     0  383.52112    0   55 1012.32264  383.52112  62.1%     -    0s
+H    0     0                     782.1480650  383.52112  51.0%     -    0s
+     0     0  386.84153    0   56  782.14806  386.84153  50.5%     -    0s
+     0     0  386.84153    0   56  782.14806  386.84153  50.5%     -    0s
+     0     0  388.75156    0   52  782.14806  388.75156  50.3%     -    0s
+H    0     0                     712.4759942  388.75156  45.4%     -    0s
+     0     0  388.83268    0   48  712.47599  388.83268  45.4%     -    0s
+     0     0  388.83268    0   48  712.47599  388.83268  45.4%     -    0s
+     0     0  388.83268    0   51  712.47599  388.83268  45.4%     -    0s
+     0     0  388.83268    0   42  712.47599  388.83268  45.4%     -    0s
+     0     2  388.83268    0   42  712.47599  388.83268  45.4%     -    0s
+*   51    52              22     699.6297992  390.86671  44.1%  24.8    0s
+H   72    64                     599.6297992  390.86671  34.8%  19.1    0s
+H  147   117                     561.9836217  393.43515  30.0%  17.3    0s
+H  232   120                     560.2053940  406.57642  27.4%  17.4    0s
+H  248   120                     554.7940125  406.57642  26.7%  16.9    0s
+H  351   124                     518.5685090  421.02549  18.8%  17.5    0s
+H  414   123                     478.6410340  421.02549  12.0%  16.8    0s
+*  611    95              19     473.9663032  453.81792  4.25%  15.8    0s
+
+Cutting planes:
+  Gomory: 14
+  Implied bound: 9
+  Projected implied bound: 1
+  Clique: 1
+  MIR: 21
+  Flow cover: 30
+  Inf proof: 3
+  RLT: 46
+  Relax-and-lift: 11
+
+Explored 719 nodes (10527 simplex iterations) in 1.01 seconds
+Thread count was 2 (of 8 available processors)
+
+Solution count 10: 473.966 478.641 518.569 ... 782.148
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.739663032250e+02, best bound 4.739663032250e+02, gap 0.0000%
+Discarded solution information
