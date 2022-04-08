@@ -241,18 +241,14 @@ def main(number_customer):
             instance_configuration = entry.path[len(directory) +
                                                 1:len(entry.path) - 4]
             print(instance_configuration)
+            path = os.path.join(directory, instance_configuration + '.xml')
+            instance_amount = read_xml.count_instances(path)
+            for instance in range(instance_amount):
+                file_name = "_".join(['Results', 'CP_VRP', instance_configuration, str(instance)]) + ".csv"
+                result_file = os.path.join('results', str(number_customer), 'CP_VRP', file_name)
+                with open(result_file, 'w', newline='') as result_csv_file:
+                    writer = csv.writer(result_csv_file, delimiter=";")
 
-            all_results = list()
-
-            file_name = "_".join(['Results', 'CP_VRP', instance_configuration]) + ".csv"
-            result_file = os.path.join('results', str(number_customer), 'CP_VRP', file_name)
-
-            with open(result_file, 'w', newline='') as result_csv_file:
-                writer = csv.writer(result_csv_file, delimiter=";")
-                path = os.path.join(directory, instance_configuration + '.xml')
-                instance_amount = read_xml.count_instances(path)
-
-                for instance in range(instance_amount):
                     data = generate_input_data(path, instance)
                     data["distances"].update((key, math.ceil(value)) for key, value in data["distances"].items())
                     model, variables = build_cp_model(data)
@@ -270,33 +266,34 @@ def main(number_customer):
                         for i, j in data["extended_arcs"]:
                             if solver.Value(variables["x"][i, j]):
                                 print('x', variables["x"][i, j])
-                                x = [f'x[{i}, {j}]']
+                                x = [f'x[{i}, {j}]', str(solver.Value(variables["x"][i, j]))]
                                 writer.writerow(x)
+
                         for i, j in data["extended_arcs"]:
                             if solver.Value(variables["w"][i, j]):
                                 print('w', variables["w"][i, j])
-                                w = [f'w[{i}, {j}], {solver.Value(variables["w"][i, j])}']
+                                w = [f'w[{i}, {j}]', str(solver.Value(variables["w"][i, j]))]
                                 writer.writerow(w)
                         for i, j in data["extended_arcs"]:
                             if solver.Value(variables["v"][i, j]):
                                 print('v', variables["v"][i, j])
-                                v = [f'v[{i}, {j}]']
+                                v = [f'v[{i}, {j}]', str(solver.Value(variables["v"][i, j]))]
                                 writer.writerow(v)
                         for j in data["arrival_nodes"]:
                             for m in data["modes"]:
                                 if solver.Value(variables["y"][j, m]):
                                     print(variables["y"][j, m])
-                                    y = [f'y[{j}, {m}]']
+                                    y = [f'y[{j}, {m}]', str(solver.Value(variables["y"][j, m]))]
                                     writer.writerow(y)
                         for j in data["all_nodes"]:
                             if solver.Value(variables["service_time"][j]):
                                 print(variables["service_time"][j], solver.Value(variables["service_time"][j]))
-                                service_time = [f'service_time[{j}]; {solver.Value(variables["service_time"][j])}']
+                                service_time = [f'service_time[{j}]', str(solver.Value(variables["service_time"][j]))]
                                 writer.writerow(service_time)
                         for j in data["all_nodes"]:
                             if solver.Value(variables["start_service"][j]):
                                 print(variables["start_service"][j], solver.Value(variables["start_service"][j]))
-                                start_service = [f'start_service[{j}]; {solver.Value(variables["start_service"][j])}']
+                                start_service = [f'start_service[{j}]', str(solver.Value(variables["start_service"][j]))]
                                 writer.writerow(start_service)
                         result_csv_file.flush()
                     else:

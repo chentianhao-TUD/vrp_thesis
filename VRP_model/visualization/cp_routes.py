@@ -15,7 +15,7 @@ INSTANCE = 4
 ITERATION = "0"
 VEHICLE_CAPACITY = 2
 XML_FILE_NAME = CONFIGURATION + ".xml"
-SOLUTION_FILE_NAME = "CRVRP_" + CONFIGURATION + "_" +str(INSTANCE) + "_" + ITERATION + ".SOL"
+SOLUTION_FILE_NAME = "Results_CP_VRP_" + CONFIGURATION + "_" + str(INSTANCE) + ".csv" #Results_CP_VRP_5-4-11-100_4
 if VEHICLE_CAPACITY * N_VEHICLES >= N_ROBOTS:
     START_DEPOTS_ROBOTS = []
 else:
@@ -44,9 +44,9 @@ def get_actual_node_number(node):
 
 
 def get_vars():
-    path_solution = os.path.join("solutions", SOLUTION_FILE_NAME)
+    path_solution = os.path.join("results", str(N_FIELDS), 'CP_VRP', SOLUTION_FILE_NAME)
     with open(path_solution, 'r', newline='') as solution_csv_file:
-        csv_reader = csv.reader(solution_csv_file, delimiter=" ")
+        csv_reader = csv.reader(solution_csv_file, delimiter=";")
 
         x = {}
         w = {}
@@ -118,7 +118,7 @@ def main(node_number):
     nx.draw_networkx_edge_labels(G2, pos, label_pos=0.3, edge_labels=x, font_size=5, ax=axes[1])
     nx.draw_networkx_edges(G2, pos, width=2, arrowsize=8, ax=axes[1])
     nx.draw_networkx_nodes(G2, pos, node_size=80, ax=axes[1])
-    plt.savefig('robot_route_4.png', dpi=600)
+    plt.savefig('CPVRP_routes_4.png', dpi=600)
 
 
 if __name__ == '__main__':
