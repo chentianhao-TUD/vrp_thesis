@@ -1,7 +1,7 @@
 import os
 from xml.etree import ElementTree as ET
 
-path = 'instances/5/5-2-7-100.xml'
+path = 'instances/5/5-4-11-100.xml'
 
 
 def count_instances(path):

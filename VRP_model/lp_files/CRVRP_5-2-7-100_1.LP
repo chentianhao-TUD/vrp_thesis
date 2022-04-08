@@ -1791,6 +1791,12 @@ Subject To
  LeaveDepartureNodesNotEmpty[12]: w[12,1] + w[12,2] + w[12,3] + w[12,4]
    + w[12,5] + w[12,6] + w[12,7] + w[12,8] + w[12,9] + w[12,10] + w[12,11]
    + w[12,12] + w[12,13] + w[12,14] + w[12,15] >= 1
+ R1001: - start_service[0] + start_service[1] >= 0
+ R1002: - start_service[0] + start_service[2] >= 0
+ R1003: - start_service[1] + start_service[2] >= 0
+ R1004: - start_service[13] + start_service[14] >= 0
+ R1005: - start_service[13] + start_service[15] >= 0
+ R1006: - start_service[14] + start_service[15] >= 0
 Bounds
  x[0,0] = 0
  x[0,1] = 0

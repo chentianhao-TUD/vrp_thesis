@@ -421,9 +421,11 @@ def build_model_CRVRP(data):
                    "LeaveDepartureNodesNotEmpty")
 
     ### SYNCHRONIZATION BREAKING CONSTRAINTS ###
+    mdl.addConstrs((start_service[j] >= start_service[i]
+                    for j in data["start_depots"] for i in data["start_depots"] if i < j))
 
-
-
+    mdl.addConstrs((start_service[j] >= start_service[i]
+                    for j in data["end_depots"] for i in data["end_depots"] if i < j))
     return mdl, variables
 
 

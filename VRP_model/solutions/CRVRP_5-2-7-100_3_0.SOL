@@ -1,5 +1,5 @@
 # Solution for model CRVRP
-# Objective value = 4.3584823354666673e+02
+# Objective value = 435.848233546666
 x[0,0] 0
 x[0,1] 0
 x[0,2] 0
@@ -59,8 +59,8 @@ x[3,7] 0
 x[3,8] 0
 x[3,9] 0
 x[3,10] 0
-x[3,11] 0
-x[3,12] 1
+x[3,11] 1
+x[3,12] 0
 x[3,13] 0
 x[3,14] 0
 x[3,15] 0
@@ -107,8 +107,8 @@ x[6,7] 0
 x[6,8] 0
 x[6,9] 0
 x[6,10] 0
-x[6,11] 1
-x[6,12] 0
+x[6,11] 0
+x[6,12] 1
 x[6,13] 0
 x[6,14] 0
 x[6,15] 0
@@ -795,18 +795,18 @@ service_time[13] 0
 service_time[14] 0
 service_time[15] 0
 start_service[0] 0
-start_service[1] 2.6071819873530309e+01
-start_service[2] 4.5393052309988512e+01
-start_service[3] 1.0028313506988761e+02
-start_service[4] 2.2829217441159022e+02
-start_service[5] 3.5732436091759610e+01
+start_service[1] 2.6071819873530330e+01
+start_service[2] 4.5393052309987638e+01
+start_service[3] 1.0028313506988673e+02
+start_service[4] 2.2829217441159011e+02
+start_service[5] 3.5732436091758842e+01
 start_service[6] 89.0721248597547
-start_service[7] 1.3035909936765222e+01
-start_service[8] 2.9528313506988758e+02
-start_service[9] 4.0329217441159022e+02
-start_service[10] 3.5983383404801612e+02
-start_service[11] 3.3407212485975469e+02
-start_service[12] 2.0303590993676522e+02
-start_service[13] 3.5017321782978667e+02
-start_service[14] 3.7073611527651371e+02
-start_service[15] 4.3584823354666673e+02
+start_service[7] 1.3035909936765165e+01
+start_service[8] 2.9528313506988673e+02
+start_service[9] 4.0329217441159005e+02
+start_service[10] 3.5983383404801464e+02
+start_service[11] 3.4677610868691221e+02
+start_service[12] 2.0303590993676517e+02
+start_service[13] 3.5017321782978581e+02
+start_service[14] 3.7073611527646540e+02
+start_service[15] 435.848233546666
