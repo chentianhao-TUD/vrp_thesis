@@ -13,11 +13,11 @@ N_FIELDS = 5
 N_VEHICLES = 4
 N_ROBOTS = 11
 CONFIGURATION = "-".join([str(N_FIELDS), str(N_VEHICLES), str(N_ROBOTS), "100"])
-INSTANCE = 4
+INSTANCE = 3
 ITERATION = "0"
 VEHICLE_CAPACITY = 2
 XML_FILE_NAME = CONFIGURATION + ".xml"
-SOLUTION_FILE_NAME = MODEL + "_" + CONFIGURATION + "_" +str(INSTANCE) + "_" + ITERATION + ".SOL"
+SOLUTION_FILE_NAME = "Results_CP_VRP_" + CONFIGURATION + "_" + str(INSTANCE) + ".csv" #Results_CP_VRP_5-4-11-100_4
 
 if VEHICLE_CAPACITY * N_VEHICLES >= N_ROBOTS:
     START_DEPOTS_ROBOTS = []
@@ -94,9 +94,9 @@ def get_actual_node_number(node):
 
 
 def get_vars():
-    path_solution = os.path.join("solutions", SOLUTION_FILE_NAME)
+    path_solution = os.path.join("results", '5', 'CP_VRP', SOLUTION_FILE_NAME)
     with open(path_solution, 'r', newline='') as solution_csv_file:
-        csv_reader = csv.reader(solution_csv_file, delimiter=" ")
+        csv_reader = csv.reader(solution_csv_file, delimiter=";")
 
         x = {}
         w = {}
@@ -109,7 +109,7 @@ def get_vars():
                 x[tuple(int(s) for s in re.findall(r'\d+', row[0]))] = int(round(float(row[1])))
             elif 'w' in row[0] and int(round(float(row[1]))) > 0.1:
                 w[tuple(int(round(float(s))) for s in re.findall(r'\d+', row[0]))] = int(round(float(row[1])))
-            elif 'v' in row[0] and int(round(float(row[1]))) == 1:
+            elif 'v[' in row[0] and int(round(float(row[1]))) == 1:
                 v[tuple(int(round(float(s))) for s in re.findall(r'\d+', row[0]))] = int(round(float(row[1])))
             elif 'service_time' in row[0] and float(row[1]) > 0.1:
                 service_time[tuple(int(round(float(s))) for s in re.findall(r'\d+', row[0]))[0]] = float(row[1])
@@ -233,7 +233,7 @@ def main():
         else:
             continue
 
-    plt.savefig("CRVRP_gantt_4.png")
+    plt.savefig("CP_VRP_gantt_3.png")
     plt.close()
 
 
