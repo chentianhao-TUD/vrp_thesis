@@ -8,34 +8,14 @@ import math
 import numpy as np
 
 
-MODEL = "CRVRP"
-N_FIELDS = 10
-N_VEHICLES = 3
-N_ROBOTS = 7
-CONFIGURATION = "-".join([str(N_FIELDS), str(N_VEHICLES), str(N_ROBOTS), "100"])
-INSTANCE = 0
-ITERATION = "0"
-VEHICLE_CAPACITY = 2
-XML_FILE_NAME = CONFIGURATION + ".xml"
-SOLUTION_FILE_NAME = MODEL + "_" + CONFIGURATION + "_" +str(INSTANCE) + "_" + ITERATION + ".SOL"
-
-if VEHICLE_CAPACITY * N_VEHICLES >= N_ROBOTS:
-    START_DEPOTS_ROBOTS = []
-else:
-    n_start_depots_robots = math.ceil((N_ROBOTS - VEHICLE_CAPACITY * N_VEHICLES) / VEHICLE_CAPACITY)
-    START_DEPOTS_ROBOTS = list(range(1, n_start_depots_robots + 1))
-n_START_DEPOTS_ROBOTS = len(START_DEPOTS_ROBOTS)
-END_DEPOT = (n_START_DEPOTS_ROBOTS) * 2 + N_FIELDS * 2 + 1
-
-
-def get_departure_node(i):
+def get_departure_node(i, n_start_depots_robots, N_FIELDS):
     if n_start_depots_robots < i <= n_start_depots_robots + N_FIELDS:
         return i + N_FIELDS
     else:
         return i
 
 
-def get_actual_node_number_nDepotEQnRobots(node):
+def get_actual_node_number_nDepotEQnRobots(node, N_ROBOTS, N_FIELDS):
     if N_ROBOTS < node <= N_ROBOTS + N_FIELDS:
         actual_node = node - N_ROBOTS
     elif N_ROBOTS + N_FIELDS < node <= N_ROBOTS + N_FIELDS * 2:
@@ -45,7 +25,7 @@ def get_actual_node_number_nDepotEQnRobots(node):
     return actual_node
 
 
-def get_distance_matrix(xml_path):
+def get_distance_matrix(xml_path, n_START_DEPOTS_ROBOTS, INSTANCE):
     Nodes, demand, mode_amount, loc_x, loc_y, SetOfVehicles, SetOfRobots = read_xml.read_xml_file(xml_path, INSTANCE)
     n_depot = [0] + list(range(1, n_START_DEPOTS_ROBOTS+1))
 
@@ -83,7 +63,7 @@ def get_distance_matrix(xml_path):
 
     return distances
 
-def get_actual_node_number(node):
+def get_actual_node_number(node, n_START_DEPOTS_ROBOTS, N_FIELDS):
     if n_START_DEPOTS_ROBOTS < node <= n_START_DEPOTS_ROBOTS + N_FIELDS:
         actual_node = node - n_START_DEPOTS_ROBOTS
     elif n_START_DEPOTS_ROBOTS + N_FIELDS < node <= n_START_DEPOTS_ROBOTS + N_FIELDS * 2:
@@ -93,7 +73,7 @@ def get_actual_node_number(node):
     return actual_node
 
 
-def get_vars():
+def get_vars(SOLUTION_FILE_NAME, END_DEPOT, n_start_depots_robots):
     path_solution = os.path.join("solutions", SOLUTION_FILE_NAME)
     with open(path_solution, 'r', newline='') as solution_csv_file:
         csv_reader = csv.reader(solution_csv_file, delimiter=" ")
@@ -134,109 +114,125 @@ def random_color_alpha50(color):
     return color_alpha
 
 
-def main():
+def main(N_FIELDS, N_VEHICLES, N_ROBOTS):
+    MODEL = "CRVRP"
+    CONFIGURATION = "-".join([str(N_FIELDS), str(N_VEHICLES), str(N_ROBOTS), "100"])
+    ITERATION = "0"
+    VEHICLE_CAPACITY = 2
+    XML_FILE_NAME = CONFIGURATION + ".xml"
+
+    if VEHICLE_CAPACITY * N_VEHICLES >= N_ROBOTS:
+        START_DEPOTS_ROBOTS = []
+    else:
+        n_start_depots_robots = math.ceil((N_ROBOTS - VEHICLE_CAPACITY * N_VEHICLES) / VEHICLE_CAPACITY)
+        START_DEPOTS_ROBOTS = list(range(1, n_start_depots_robots + 1))
+    n_START_DEPOTS_ROBOTS = len(START_DEPOTS_ROBOTS)
+    END_DEPOT = (n_START_DEPOTS_ROBOTS) * 2 + N_FIELDS * 2 + 1
+
     xml_path = os.path.join("instances", str(N_FIELDS), XML_FILE_NAME)
-    distances = get_distance_matrix(xml_path)
 
+    for INSTANCE in range(5):
+        SOLUTION_FILE_NAME = MODEL + "_" + CONFIGURATION + "_" + str(INSTANCE) + "_" + ITERATION + ".SOL"
+        distances = get_distance_matrix(xml_path, n_START_DEPOTS_ROBOTS, INSTANCE)
 
-    plt.figure(2)
+        plt.figure(2)
 
-    fig, gnt = plt.subplots()
+        fig, gnt = plt.subplots()
 
-    x, w, service_time, start_service, v = get_vars()
+        x, w, service_time, start_service, v = get_vars(SOLUTION_FILE_NAME, END_DEPOT, n_start_depots_robots)
 
-    x_arcs = list(x.keys())
-    w_arcs = list(w.keys())
+        x_arcs = list(x.keys())
+        w_arcs = list(w.keys())
 
-    gnt.set_ylim(1, N_VEHICLES + N_ROBOTS + 1)
-    gnt.set_xlim(0, start_service[END_DEPOT]+100)
+        gnt.set_ylim(1, N_VEHICLES + N_ROBOTS + 1)
+        gnt.set_xlim(0, start_service[END_DEPOT]+100)
 
-    gnt.set_xlabel('time')
-    gnt.set_ylabel('Transporter/Robot')
+        gnt.set_xlabel('time')
+        gnt.set_ylabel('Transporter/Robot')
 
-    ticks = [x for x in range(2, N_ROBOTS + N_VEHICLES + 3)]
-    tick_labels = [str(x) for x in range(1, N_ROBOTS + N_VEHICLES + 2)]
+        ticks = [x for x in range(2, N_ROBOTS + N_VEHICLES + 3)]
+        tick_labels = [str(x) for x in range(1, N_ROBOTS + N_VEHICLES + 2)]
 
-    gnt.set_yticks(ticks)
-    gnt.set_yticklabels(tick_labels)
-    gnt.grid(True)
+        gnt.set_yticks(ticks)
+        gnt.set_yticklabels(tick_labels)
+        gnt.grid(True)
 
-    # color preparation for visualization
-    color_k_i = []
-    color_x = []
-    color_annotate = []
-    for i in range(1 * 2 + n_START_DEPOTS_ROBOTS * 2 + N_FIELDS * 2 + 10):
-        a = random_color()
-        color_k_i.append("#" + random_color_alpha50(a))
-        color_x.append("#" + random_color_alpha20(a))
-        color_annotate.append("#" + a)
+        # color preparation for visualization
+        color_k_i = []
+        color_x = []
+        color_annotate = []
+        for i in range(1 * 2 + n_START_DEPOTS_ROBOTS * 2 + N_FIELDS * 2 + 10):
+            a = random_color()
+            color_k_i.append("#" + random_color_alpha50(a))
+            color_x.append("#" + random_color_alpha20(a))
+            color_annotate.append("#" + a)
 
-    # gantt: vehicle bars
-    i = 0
-    j = 0
-    o = 1
-    x_gantt_bars = dict(x)
+        # gantt: vehicle bars
+        i = 0
+        j = 0
+        o = 1
+        x_gantt_bars = dict(x)
 
-    while sum(x_gantt_bars.values()) > 0:
-        j += 1
-        if (i, j) in x_gantt_bars.keys() and x_gantt_bars[i, j] > 0.1:
-            if get_departure_node(i) == j:
-            # if (i, j) in v.keys():
-                gnt.broken_barh([(start_service[i] + service_time[i], distances[i, j])], (o + 0.7, 0.6), facecolors=(color_x[get_actual_node_number(j)]),
-                                label="f" + str(i) + "->" + str(j))
+        while sum(x_gantt_bars.values()) > 0:
+            j += 1
+            if (i, j) in x_gantt_bars.keys() and x_gantt_bars[i, j] > 0.1:
+                if get_departure_node(i, n_start_depots_robots, N_FIELDS) == j:
+                # if (i, j) in v.keys():
+                    gnt.broken_barh([(start_service[i] + service_time[i], distances[i, j])], (o + 0.7, 0.6), facecolors=(color_x[get_actual_node_number(j, n_START_DEPOTS_ROBOTS, N_FIELDS)]),
+                                    label="f" + str(i) + "->" + str(j))
+                else:
+                    gnt.broken_barh([(start_service[i], distances[i, j])], (o + 0.7, 0.6), facecolors=(color_x[get_actual_node_number(j, n_START_DEPOTS_ROBOTS, N_FIELDS)]),
+                                    label="f" + str(i) + "->" + str(j))
+
+                x_gantt_bars[i, j] -= 1
+                if j == END_DEPOT:
+                    i = 0
+                    o += 1
+                else:
+                    i = j
+                j = 0
             else:
-                gnt.broken_barh([(start_service[i], distances[i, j])], (o + 0.7, 0.6), facecolors=(color_x[get_actual_node_number(j)]),
-                                label="f" + str(i) + "->" + str(j))
+                continue
 
-            x_gantt_bars[i, j] -= 1
-            if j == END_DEPOT:
-                i = 0
-                o += 1
+            # gantt: robot bars
+        i = 0
+        j = 0
+        o = N_VEHICLES + 1
+        w_gantt_bars = dict(w)
+        while sum(w_gantt_bars.values()) > 0:
+            j += 1
+            if (i, j) in w_gantt_bars and w_gantt_bars[i, j] > 0.1:
+                gnt.broken_barh([(start_service[i], distances[i, j])], (o + 0.7, 0.6),
+                                facecolors=(color_x[get_actual_node_number(j, n_START_DEPOTS_ROBOTS, N_FIELDS)]), label="f" + str(i) + "->" + str(j))
+
+                #gnt.broken_barh([(start_service[i] + service_time[i], distances[i, j])], (o + 0.7, 0.6),
+                #               facecolors=(color_x[get_actual_node_number(j)]), label="f" + str(i) + "->" + str(j))
+
+                if get_departure_node(i, n_start_depots_robots, N_FIELDS) == j:
+                    gnt.broken_barh([(start_service[i], service_time[i])], (o + 0.55, 0.9), facecolors=(color_k_i[get_actual_node_number(i, n_START_DEPOTS_ROBOTS, N_FIELDS)]), label="f" + str(i))
+
+                    #if get_actual_node_number(j) > 0 and j <= len(START_DEPOTS_ROBOTS) + N_FIELDS:
+                    gnt.annotate(str(get_actual_node_number(i, n_START_DEPOTS_ROBOTS, N_FIELDS)), (start_service[i] + service_time[i]/2, o + 0.8), fontsize=10, #
+                                  color=color_annotate[get_actual_node_number(i, n_START_DEPOTS_ROBOTS, N_FIELDS)])
+
+                w_gantt_bars[i, j] -= 1
+                if j >= END_DEPOT - n_start_depots_robots:
+                    #print(sum(w_gantt_bars[0, a] for a in range(1, END_DEPOT + 1) if (0, a) in w_gantt_bars.keys()))
+                    i = 0
+                    o += 1
+                else:
+                    i = j
+                j = 0
+            elif j > END_DEPOT:
+                i += 1
+                j = 0
             else:
-                i = j
-            j = 0
-        else:
-            continue
+                continue
 
-        # gantt: robot bars
-    i = 0
-    j = 0
-    o = N_VEHICLES + 1
-    w_gantt_bars = dict(w)
-    while sum(w_gantt_bars.values()) > 0:
-        j += 1
-        if (i, j) in w_gantt_bars and w_gantt_bars[i, j] > 0.1:
-            gnt.broken_barh([(start_service[i], distances[i, j])], (o + 0.7, 0.6),
-                            facecolors=(color_x[get_actual_node_number(j)]), label="f" + str(i) + "->" + str(j))
-
-            #gnt.broken_barh([(start_service[i] + service_time[i], distances[i, j])], (o + 0.7, 0.6),
-            #               facecolors=(color_x[get_actual_node_number(j)]), label="f" + str(i) + "->" + str(j))
-
-            if get_departure_node(i) == j:
-                gnt.broken_barh([(start_service[i], service_time[i])], (o + 0.55, 0.9), facecolors=(color_k_i[get_actual_node_number(i)]), label="f" + str(i))
-
-                #if get_actual_node_number(j) > 0 and j <= len(START_DEPOTS_ROBOTS) + N_FIELDS:
-                gnt.annotate(str(get_actual_node_number(i)), (start_service[i] + service_time[i]/2, o + 0.8), fontsize=10, #
-                              color=color_annotate[get_actual_node_number(i)])
-
-            w_gantt_bars[i, j] -= 1
-            if j >= END_DEPOT - n_start_depots_robots:
-                #print(sum(w_gantt_bars[0, a] for a in range(1, END_DEPOT + 1) if (0, a) in w_gantt_bars.keys()))
-                i = 0
-                o += 1
-            else:
-                i = j
-            j = 0
-        elif j > END_DEPOT:
-            i += 1
-            j = 0
-        else:
-            continue
-
-    plt.savefig("CRVRP_gantt_10_0.png")
-    plt.close()
+        plt.savefig(f"CRVRP_gantt_{CONFIGURATION}_{INSTANCE}.png")
+        plt.close()
 
 
 if __name__ == '__main__':
     os.chdir('..')
-    main()
+    main(10, 3, 7)
