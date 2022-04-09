@@ -9,11 +9,11 @@ import numpy as np
 
 
 MODEL = "CRVRP"
-N_FIELDS = 5
-N_VEHICLES = 4
-N_ROBOTS = 11
+N_FIELDS = 10
+N_VEHICLES = 3
+N_ROBOTS = 7
 CONFIGURATION = "-".join([str(N_FIELDS), str(N_VEHICLES), str(N_ROBOTS), "100"])
-INSTANCE = 3
+INSTANCE = 0
 ITERATION = "0"
 VEHICLE_CAPACITY = 2
 XML_FILE_NAME = CONFIGURATION + ".xml"
@@ -94,7 +94,7 @@ def get_actual_node_number(node):
 
 
 def get_vars():
-    path_solution = os.path.join("results", '5', 'CP_VRP', SOLUTION_FILE_NAME)
+    path_solution = os.path.join("results", '10', 'CP_VRP', SOLUTION_FILE_NAME)
     with open(path_solution, 'r', newline='') as solution_csv_file:
         csv_reader = csv.reader(solution_csv_file, delimiter=";")
 
@@ -233,7 +233,7 @@ def main():
         else:
             continue
 
-    plt.savefig("CP_VRP_gantt_3.png")
+    plt.savefig("CP_VRP_gantt_10_0.png")
     plt.close()
 
 

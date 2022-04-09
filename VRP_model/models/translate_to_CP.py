@@ -256,13 +256,16 @@ def main(number_customer):
                     # [start call solver]
                     solver = cp_model.CpSolver()
                     status = solver.Solve(model)
+                    solver.parameters.log_search_progress = True
                     if status == cp_model.OPTIMAL:
                         print(solver.StatusName())
                         print(solver.ObjectiveValue())
                         ins = [f'instance {instance}']
                         writer.writerow(ins)
-                        obj = [f'objective; {solver.ObjectiveValue()}']
+                        obj = ['objective', str(solver.ObjectiveValue())]
                         writer.writerow(obj)
+                        time = ['runtime', str(solver.WallTime())]
+                        writer.writerow(time)
                         for i, j in data["extended_arcs"]:
                             if solver.Value(variables["x"][i, j]):
                                 print('x', variables["x"][i, j])
@@ -305,4 +308,4 @@ def main(number_customer):
 
 if __name__ == '__main__':
     os.chdir('..')
-    main(5)
+    main(10)

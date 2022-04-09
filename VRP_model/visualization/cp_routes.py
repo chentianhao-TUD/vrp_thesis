@@ -7,9 +7,9 @@ import networkx as nx
 import math
 
 
-N_FIELDS = 5
-N_VEHICLES = 4
-N_ROBOTS = 11
+N_FIELDS = 10
+N_VEHICLES = 3
+N_ROBOTS = 7
 CONFIGURATION = "-".join([str(N_FIELDS), str(N_VEHICLES), str(N_ROBOTS), "100"])
 INSTANCE = 0
 ITERATION = "0"
@@ -118,7 +118,7 @@ def main(node_number):
     nx.draw_networkx_edge_labels(G2, pos, label_pos=0.3, edge_labels=x, font_size=5, ax=axes[1])
     nx.draw_networkx_edges(G2, pos, width=2, arrowsize=8, ax=axes[1])
     nx.draw_networkx_nodes(G2, pos, node_size=80, ax=axes[1])
-    plt.savefig('CP_VRP_routes_0.png', dpi=600)
+    plt.savefig('CP_VRP_routes_10_0.png', dpi=600)
 
 
 if __name__ == '__main__':

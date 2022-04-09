@@ -9,11 +9,11 @@ import numpy as np
 
 
 MODEL = "CRVRP"
-N_FIELDS = 5
-N_VEHICLES = 4
-N_ROBOTS = 11
+N_FIELDS = 10
+N_VEHICLES = 3
+N_ROBOTS = 7
 CONFIGURATION = "-".join([str(N_FIELDS), str(N_VEHICLES), str(N_ROBOTS), "100"])
-INSTANCE = 4
+INSTANCE = 0
 ITERATION = "0"
 VEHICLE_CAPACITY = 2
 XML_FILE_NAME = CONFIGURATION + ".xml"
@@ -233,7 +233,7 @@ def main():
         else:
             continue
 
-    plt.savefig("CRVRP_gantt_4.png")
+    plt.savefig("CRVRP_gantt_10_0.png")
     plt.close()
 
 

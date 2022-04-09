@@ -1,0 +1,123 @@
+instance 3
+objective;706.0
+runtime;800.220384749
+x[0, 4];1
+x[0, 7];1
+x[0, 10];1
+x[1, 11];1
+x[2, 15];1
+x[3, 2];1
+x[4, 14];1
+x[5, 21];1
+x[6, 18];1
+x[7, 17];1
+x[8, 6];1
+x[9, 13];1
+x[10, 1];1
+x[11, 20];1
+x[12, 23];1
+x[13, 22];1
+x[14, 8];1
+x[15, 9];1
+x[16, 23];1
+x[17, 5];1
+x[18, 16];1
+x[19, 23];1
+x[20, 3];1
+x[21, 12];1
+x[22, 19];1
+w[0, 4];2
+w[0, 7];2
+w[0, 10];2
+w[1, 11];1
+w[2, 12];1
+w[3, 2];1
+w[3, 13];1
+w[4, 14];2
+w[5, 15];2
+w[6, 16];1
+w[7, 17];2
+w[8, 6];1
+w[8, 18];1
+w[9, 19];2
+w[10, 20];2
+w[11, 21];1
+w[12, 23];2
+w[13, 22];1
+w[14, 8];2
+w[15, 9];2
+w[16, 23];2
+w[17, 5];2
+w[18, 16];1
+w[19, 23];2
+w[20, 3];2
+w[21, 12];1
+v[0, 4];1
+v[0, 7];1
+v[0, 10];1
+v[1, 11];1
+v[2, 12];1
+v[3, 2];1
+v[3, 13];1
+v[4, 14];1
+v[5, 15];1
+v[6, 16];1
+v[7, 17];1
+v[8, 6];1
+v[8, 18];1
+v[9, 19];1
+v[10, 20];1
+v[11, 21];1
+v[12, 23];1
+v[13, 22];1
+v[14, 8];1
+v[15, 9];1
+v[16, 23];1
+v[17, 5];1
+v[18, 16];1
+v[19, 23];1
+v[20, 3];1
+v[21, 12];1
+y[2, 1];1
+y[3, 1];1
+y[4, 2];1
+y[5, 2];1
+y[6, 1];1
+y[7, 2];1
+y[8, 1];1
+y[9, 2];1
+y[10, 2];1
+y[11, 1];1
+service_time[2];330
+service_time[3];270
+service_time[4];245
+service_time[5];145
+service_time[6];220
+service_time[7];245
+service_time[8];200
+service_time[9];165
+service_time[10];205
+service_time[11];410
+start_service[1];58
+start_service[2];292
+start_service[3];278
+start_service[4];109
+start_service[5];318
+start_service[6];438
+start_service[7];47
+start_service[8];385
+start_service[9];497
+start_service[10];29
+start_service[11];148
+start_service[12];622
+start_service[13];557
+start_service[14];354
+start_service[15];463
+start_service[16];658
+start_service[17];292
+start_service[18];585
+start_service[19];667
+start_service[20];234
+start_service[21];558
+start_service[22];628
+start_service[23];706
