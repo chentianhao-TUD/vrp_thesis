@@ -1,0 +1,74 @@
+instance 4
+"objective; 388.0"
+x[0, 4];1
+x[0, 5];1
+x[0, 6];1
+x[1, 7];1
+x[2, 3];1
+x[3, 11];1
+x[4, 1];1
+x[5, 10];1
+x[6, 2];1
+x[7, 12];1
+x[8, 15];1
+x[9, 15];1
+x[10, 13];1
+x[11, 14];1
+x[12, 15];1
+x[13, 9];1
+x[14, 8];1
+w[0, 4];2
+w[0, 5];2
+w[0, 6];2
+w[1, 7];2
+w[2, 3];1
+w[3, 8];1
+w[4, 9];2
+w[5, 10];2
+w[6, 11];2
+w[7, 12];2
+w[8, 15];1
+w[9, 15];2
+w[10, 13];2
+w[11, 14];2
+w[12, 15];2
+v[0, 4];1
+v[0, 5];1
+v[0, 6];1
+v[1, 7];1
+v[2, 3];1
+v[3, 8];1
+v[4, 9];1
+v[5, 10];1
+v[6, 11];1
+v[7, 12];1
+v[8, 15];1
+v[9, 15];1
+v[10, 13];1
+v[11, 14];1
+v[12, 15];1
+y[3, 1];1
+y[4, 2];1
+y[5, 2];1
+y[6, 2];1
+y[7, 2];1
+service_time[3];200
+service_time[4];220
+service_time[5];140
+service_time[6];205
+service_time[7];150
+start_service[1];58
+start_service[2];112
+start_service[3];145
+start_service[4];29
+start_service[5];85
+start_service[6];56
+start_service[7];148
+start_service[8];350
+start_service[9];339
+start_service[10];225
+start_service[11];261
+start_service[12];298
+start_service[13];310
+start_service[14];317
+start_service[15];388
