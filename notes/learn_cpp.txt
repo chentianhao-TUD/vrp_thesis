@@ -15,5 +15,12 @@ Learning C++
 -不能以数字开头
 -区分大小写
 
+P8
+数据类型给变量分配合适的内存空间
+*整形
+short 2bytes
+int 4bytes
+long win 4 bytes linux 4bytes 32 8bytes 64
+long long 8 bytes
 
-
+*sizeof(variable) 查看变量占用内存空间大小q 
