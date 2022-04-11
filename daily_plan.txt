@@ -22,4 +22,16 @@
 
 29.MAR
 *plan
-	finish reading python examples for sat 
+	finish reading python examples for sat
+
+11APR
+*plan 
+-finish reading manul part6
+-read 50 pages of python basic
+
+*start points updated 12:30
+-start reading manul
+-start reading python on page 43, target 93
+*end points updated 20:30
+-read python basic to page 98
+-manual not finish
