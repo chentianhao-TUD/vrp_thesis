@@ -3,25 +3,25 @@ from ortools.sat.python import cp_model
 from CRVRP import generate_input_data
 import os
 
-storage = {}
+
+class Filter():
+    def __init__(self):
+        self.block = []
+
+    def filter(self, seq):
+        return [x for x in seq if x not in self.block]
 
 
-def init(data):
-    data['first'] = {}
-    data['middle'] = {}
-    data['last'] = {}
+class SpamFilter(Filter):
+    def __init__(self):
+        super().__init__()
+        self.block = ['spam']
 
 
-def lookup(data, label, name):
-    return data[label].get(name)
+K = Filter()
+K.filter([1, 2, 3])
+print(K.filter([1, 2, 3]))
 
-
-def store(data, full_name):
-    names = full_name.split()
-    labels = ['first', 'middle', 'last']
-    for label, name in zip(labels, names):
-        data[label] = name
-
-
-store(storage, 'CHEN TIAN HAO')
-print(storage)
+Y = SpamFilter()
+Y.filter([1, 2, 4, 'spam'])
+print(Y.filter([1, 2, 4, 'spam']))

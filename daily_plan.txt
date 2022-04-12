@@ -34,4 +34,22 @@
 -start reading python on page 43, target 93
 *end points updated 20:30
 -read python basic to page 98
--manual not finish
+-manual finish but not really understand
+-sum learning time 6:32
+
+12APR
+*plan
+-5:00 get up
+-8 hour study
+-1 hour sport
+-22:00 sleep
+-2hour cpp video
+-2hour python book 30 pages
+-4hour CP model
+--understand SequenceVar RankedVar
+
+*start points
+-python page 98 target 130
+
+*end points
+
